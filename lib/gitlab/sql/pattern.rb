@@ -22,7 +22,8 @@ module Gitlab
         end
 
         def partial_matching?(query)
-          query.length >= MIN_CHARS_FOR_PARTIAL_MATCHING
+          # Support searching with 2 Chinese characters
+          query.gsub(/\p{Han}/u, '**').length >= MIN_CHARS_FOR_PARTIAL_MATCHING
         end
 
         def fuzzy_arel_match(column, query)
